@@ -1,0 +1,74 @@
+# Logs
+logs
+*.log
+yarn-debug.log*
+yarn-error.log*
+yarn.lock
+lockfiles
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Compiled binary addons
+build/
+dist/
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.test
+.env.local
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode
+.vscode-test
+
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+yarn.lock
+
+# macOS
+.DS_Store
+
+# Hardhat files
+cache
+artifacts
+deployments
+
+# lockfiles
+packages/core-types/package-lock.json
+packages/account-abstraction/package-lock.json
+packages/common/package-lock.json
+packages/ethers-lib/package-lock.json
+packages/node-client/package-lock.json
+packages/relayer/package-lock.json
+packages/smart-account/package-lock.json
+packages/transactions/package-lock.json
+package-lock.json
+
+# Typechain
+typechain
+
+openapi/
