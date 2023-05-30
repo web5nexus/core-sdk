@@ -1,6 +1,6 @@
 {
   "name": "@web5nexus/web3auth-core",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "description": "Core Implementation for 1 click Web3 Social Auth Implementation for Ethereum, XDC, Bitcoin,Cosmos and other Altcoins.",
   "keywords": [
     "XDC",
@@ -27,7 +27,12 @@
     "type": "git",
     "url": "git+https://github.com/web5nexus/core-sdk.git"
   },
-  "scripts": {},
+  "scripts": {
+    "unbuild": "rimraf dist *.tsbuildinfo",
+    "build": "rimraf dist && tsc",
+    "format": "prettier --write \"{src,tests}/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json"
+  },
   "bugs": {
     "url": "https://github.com/web5nexus/core-sdk/issues"
   },
