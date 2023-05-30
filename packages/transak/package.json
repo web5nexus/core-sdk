@@ -1,0 +1,42 @@
+{
+  "name": "@web5nexus/transak",
+  "version": "0.1.0",
+  "description": "transak integration for web5nexus sdk",
+  "main": "./dist/src/index.js",
+  "typings": "./dist/src/index.d.ts",
+  "keywords": [
+    "legos",
+    "batching",
+    "one-click",
+    "cross-chain",
+    "transak",
+    "buy",
+    "sell"
+  ],
+  "author": "Jetso Analin <jetso@web5.nexus>",
+  "homepage": "https://github.com/web5nexus/core-sdk#readme",
+  "license": "MIT",
+  "files": [
+    "dist/*",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/web5nexus/core-sdk.git"
+  },
+  "scripts": {
+    "unbuild": "rimraf dist *.tsbuildinfo",
+    "build": "rimraf dist && tsc",
+    "format": "prettier --write \"{src,tests}/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json"
+  },
+  "bugs": {
+    "url": "https://github.com/web5nexus/core-sdk/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@transak/transak-sdk": "^1.2.3"
+  }
+}
