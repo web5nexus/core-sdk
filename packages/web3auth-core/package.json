@@ -37,12 +37,24 @@
     "url": "https://github.com/web5nexus/core-sdk/issues"
   },
   "dependencies": {
+    "@bitgo/utxo-lib": "^8.4.0",
+    "@cosmjs/crypto": "^0.30.1",
+    "@cosmjs/proto-signing": "^0.30.1",
+    "@iov/bcp": "^2.5.0",
+    "@iov/crypto": "^2.5.0",
+    "@iov/encoding": "^2.5.0",
     "@walletconnect/qrcode-modal": "^1.8.0",
     "@web3auth/base": "^5.2.0",
     "@web3auth/no-modal": "^5.2.0",
     "@web3auth/openlogin-adapter": "^5.2.0",
     "@web3auth/wallet-connect-v2-adapter": "^5.2.0",
+    "bech32": "^2.0.0",
+    "bip39": "^3.1.0",
+    "create-hash": "^1.2.0",
     "ethers": "^5.7.1",
     "web3": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/create-hash": "^1.2.2"
   }
 }
