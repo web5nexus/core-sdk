@@ -2,7 +2,7 @@ import {
     WALLET_ADAPTERS,
   } from "@web3auth/base";
 
-export async function walletconnect(
+export async function web5walletconnect(
     web3auth: any,
 ) {
     try {

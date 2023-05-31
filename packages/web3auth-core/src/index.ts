@@ -1,4 +1,10 @@
-export {facebook,google,twitch,twitter,discord,apple,github,linkedin,reddit } from './social'
-export {web5auth} from './initialize'
-export {email,mobile} from './passwordless'
-export {walletconnect} from './walletconnect'
+import {Web5} from './social'
+export { Web3AuthNoModal } from "@web3auth/no-modal";
+export {
+    CHAIN_NAMESPACES,
+    SafeEventEmitterProvider,
+    WALLET_ADAPTERS,
+} from "@web3auth/base";
+
+export default Web5
+export {web5walletconnect} from './walletconnect'
