@@ -1,7 +1,7 @@
 import type { SafeEventEmitterProvider } from "@web3auth/base";
 import Web3 from "web3";
 
-export default class EthereumRpc {
+export default class XdcRpc {
   private provider: SafeEventEmitterProvider;
 
   constructor(provider: SafeEventEmitterProvider) {
