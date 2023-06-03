@@ -12,7 +12,7 @@ export class Web5 {
     public clientId: string;
     public network: string;
     public web3auth: Web3AuthNoModal | null;
-    public web3authProvider: SafeEventEmitterProvider | null
+    public web3authProvider: SafeEventEmitterProvider | null;
 
     constructor(clientId: string, network: string) {
         this.clientId = clientId;
@@ -20,11 +20,11 @@ export class Web5 {
         this.web3auth = null;
         this.web3authProvider = null;
     }
-    
+
     async init(blockchain?: string, symbol?: string) {
         try {
             if (!(blockchain || symbol)) {
-                throw new Error('At least one of blockchain or symbol must be provided.');
+                throw new Error("At least one of blockchain or symbol must be provided.");
             }
 
             let chainConfig: ChainConfig | undefined;
@@ -35,8 +35,16 @@ export class Web5 {
             }
 
             if (!chainConfig) {
-                throw new Error(`Chain configuration not found for blockchain: ${blockchain || ''} and symbol: ${symbol || ''}`);
+                throw new Error(
+                    `Chain configuration not found for blockchain: ${blockchain || ""} and symbol: ${symbol || ""}`
+                );
             }
+
+            if (this.web3auth) {
+                console.log("Web3Auth is already initialized");
+                return this.web3auth;
+            }
+
             this.web3auth = new Web3AuthNoModal({
                 clientId: this.clientId,
                 chainConfig: {
@@ -61,7 +69,11 @@ export class Web5 {
             this.web3auth.configureAdapter(openloginAdapter);
 
             // Adding WalletConnect V2 adapter
-            const defaultWcSettings = await getWalletConnectV2Settings("eip155", [1, 137, 5], "04309ed1007e77d1f119b85205bb779d");
+            const defaultWcSettings = await getWalletConnectV2Settings(
+                "eip155",
+                [1, 137, 5],
+                "04309ed1007e77d1f119b85205bb779d"
+            );
             const walletConnectV2Adapter = new WalletConnectV2Adapter({
                 adapterSettings: { qrcodeModal: QRCodeModal, ...defaultWcSettings.adapterSettings },
                 loginSettings: { ...defaultWcSettings.loginSettings },
@@ -70,6 +82,7 @@ export class Web5 {
             this.web3auth.configureAdapter(walletConnectV2Adapter);
 
             await this.web3auth.init();
+            console.log("Web3Auth initialized successfully");
             return this.web3auth;
         } catch (error) {
             console.error(error);
