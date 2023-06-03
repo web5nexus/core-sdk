@@ -38,8 +38,11 @@
   },
   "dependencies": {
     "@bitgo/utxo-lib": "^8.4.0",
+    "@cosmjs/amino": "^0.30.1",
     "@cosmjs/crypto": "^0.30.1",
+    "@cosmjs/encoding": "^0.30.1",
     "@cosmjs/proto-signing": "^0.30.1",
+    "@cosmjs/stargate": "^0.30.1",
     "@iov/bcp": "^2.5.0",
     "@iov/crypto": "^2.5.0",
     "@iov/encoding": "^2.5.0",
