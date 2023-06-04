@@ -293,5 +293,3 @@ cosmosRpc.getPrivateKey()
 
 This library is licensed under the MIT License.
 ```
-
-You can customize the content and examples based on your specific use case and requirements.
