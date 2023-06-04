@@ -164,7 +164,8 @@ function App() {
       return;
     }
     const rpc = new Web5Nexus.CosmosRpc("coreum","testnet",provider);
-    const receipt = await rpc.sendTransaction("100000","testcore1jav3wurj74l9ftld26lmxy980t64ht462v4p54");
+    const gasFee = "5000";
+    const receipt = await rpc.sendTransaction("100000","testcore1jav3wurj74l9ftld26lmxy980t64ht462v4p54",gasFee);
     uiConsole(receipt);
   };
 

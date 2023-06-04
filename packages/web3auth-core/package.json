@@ -1,6 +1,6 @@
 {
   "name": "@web5nexus/web3auth-core",
-  "version": "0.1.46",
+  "version": "0.1.48",
   "description": "Core Implementation for 1 click Web3 Social Auth Implementation for Ethereum, XDC, Bitcoin,Cosmos and other Altcoins.",
   "keywords": [
     "XDC",
@@ -51,6 +51,7 @@
     "@web3auth/no-modal": "^5.2.0",
     "@web3auth/openlogin-adapter": "^5.2.0",
     "@web3auth/wallet-connect-v2-adapter": "^5.2.0",
+    "@web5nexus/bitcoin-core": "^0.1.1",
     "bech32": "^2.0.0",
     "bip39": "^3.1.0",
     "create-hash": "^1.2.0",

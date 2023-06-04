@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useMemo } from "react";
 import "./App.css";
 import Web5Nexus, { Web3AuthNoModal } from "@web5nexus/web3auth-core";
 import { web5walletconnect } from "@web5nexus/web3auth-core";
@@ -9,7 +9,7 @@ const clientId =
 function App() {
   const [web3auth, setWeb3auth] = useState<Web3AuthNoModal | null>(null);
   const [provider, setProvider] = useState<any | null>(null);
-  const web5 = new Web5Nexus.Web5(clientId, "MAINNET");
+  const web5 = useMemo(() => new Web5Nexus.Web5(clientId, "MAINNET"), []);
 
   useEffect(() => {
 
@@ -23,7 +23,7 @@ function App() {
     }
     initialize();
 
-  }, []);
+  }, [web5]);
 
 
   const loginFacebook = async () => {
@@ -163,7 +163,7 @@ function App() {
       return;
     }
     const rpc = new Web5Nexus.XdcRpc(provider);
-    const receipt = await rpc.sendTransaction();
+    const receipt = await rpc.sendTransaction("100000000000000","0x425550C80A13df153e96BfD7cD096bA0801256CA");
     uiConsole(receipt);
   };
 

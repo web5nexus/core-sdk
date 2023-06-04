@@ -107,7 +107,7 @@ export default class CosmosRpc {
         }
     }
 
-    async sendTransaction(amount: string, toAddress: string, gas?: string): Promise<any> {
+    async sendTransaction(amount: string, toAddress: string, gasFee?:string, gasLimit?: string): Promise<any> {
         try {
             await StargateClient.connect(this.rpcTarget);
             const privateKey = Buffer.from(await this.getPrivateKey(), "hex");
@@ -120,7 +120,10 @@ export default class CosmosRpc {
             const destination = toAddress;
 
             const defaultGas = "100000";
-            const gasPrice = gas !== undefined ? gas : defaultGas;
+            const gasLimits = gasLimit !== undefined ? gasLimit : defaultGas;
+
+            const defaultFee = "4000";
+            const gasFees = gasFee !== undefined ? gasFee : defaultFee;
 
             const getSignerFromKey = async (): Promise<OfflineDirectSigner> => {
                 return DirectSecp256k1Wallet.fromKey(privateKey, this.hrp);
@@ -136,8 +139,8 @@ export default class CosmosRpc {
                 destination,
                 [{ denom: this.denom, amount: amount }],
                 {
-                    amount: [{ denom: this.denom, amount: amount }],
-                    gas: gasPrice,
+                    amount: [{ denom: this.denom, amount: gasFees }],
+                    gas: gasLimits,
                 }
             );
             const transactionHash = result.transactionHash;

@@ -62,7 +62,7 @@
     "eject": "react-scripts eject",
     "lint": "react-scripts lint"
   },
-  "engines" : { 
-    "node" : "18.15.0"
+  "engines": {
+    "node": ">=10.22.0 <17"
   }
 }
