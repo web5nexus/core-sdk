@@ -68,8 +68,8 @@ export default class XdcRpc {
             const defaultMaxFeePerGas = "6000000000000";
 
             // Use provided values or default values
-            const priorityFeePerGas = maxPriorityFeePerGas || defaultMaxPriorityFeePerGas;
-            const feePerGas = maxFeePerGas || defaultMaxFeePerGas;
+            const priorityFeePerGas = maxPriorityFeePerGas !== undefined ? maxPriorityFeePerGas: defaultMaxPriorityFeePerGas;
+            const feePerGas = maxFeePerGas !== undefined ? maxFeePerGas : defaultMaxFeePerGas;
 
             // Submit transaction to the blockchain and wait for it to be mined
             const receipt = await web3.eth.sendTransaction({

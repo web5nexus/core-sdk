@@ -1,8 +1,8 @@
 import XdcRpc from './xdc';
 import CosmosRpc from './cosmos'
 import {Web5} from './social'
-export { Web3AuthNoModal } from "@web3auth/no-modal";
-export {
+export type { Web3AuthNoModal } from "@web3auth/no-modal";
+export type {
     CHAIN_NAMESPACES,
     SafeEventEmitterProvider,
     WALLET_ADAPTERS,
