@@ -60,5 +60,8 @@
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "lint": "react-scripts lint"
+  },
+  "engines" : { 
+    "node" : "18.15.0"
   }
 }
