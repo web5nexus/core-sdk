@@ -15,7 +15,7 @@
       "./tests/**/*"
     ],
     "references": [
-      { "path": "./packages/web3auth-core" },
+      { "path": "./packages/social-login" },
       { "path": "./packages/transak" }
     ]
   }
