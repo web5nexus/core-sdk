@@ -18,9 +18,6 @@ import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import { Web3AuthNoModal } from "@web3auth/no-modal";
 import chains, { ChainConfig } from './config/evmchains';
 
-const clientId = "BJ2nx05HJkS2V_E-WtRliS3XaGvsTtWjBD_jNWeI30B15Rb9ienN-pcL0CiTN5PqqnEHBu7mmxi7GvWBUuxId8Y";
-const clientSecret = "72122785a8c9e30a4139d4e62da926cb1e4e18bb106a31ec1df40361d837a8f7";
-
 function createLoginModal(socialLogin: SocialLogin): void {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   const root = createRoot((document as any).getElementById("w3a-modal"));
@@ -43,6 +40,8 @@ class SocialLogin {
 
   clientId: string;
 
+  clientSecret: string;
+
   whiteLabel: WhiteLabelDataType;
 
   userInfo: Partial<UserInfo> | null = null;
@@ -51,24 +50,25 @@ class SocialLogin {
 
   provider: SafeEventEmitterProvider | null = null;
 
-  constructor() {
+  constructor(clientId:string,clientSecret:string, name?:string,logo?:string) {
     this.createWalletDiv();
     this.isInit = false;
     this.web3auth = null;
     this.provider = null;
     this.clientId = clientId;
+    this.clientSecret = clientSecret;
     this.whiteLabel = {
-      name: "Web5 Social",
-      logo: "https://lh3.googleusercontent.com/fife/AK0iWDzoYTHWdtLQSNfP9DYeb2gS0gIhIv5NWJGErMZL6z5aEt3ycyUq6itUGwortM_7cbWhFHascxn7IoiQ_-y9PVBESJoO9V4oxCQtx2BCwqWIrXxoy26wVROxLeMtxhj249AK3chtlcUOMX2ajkiSKGfyglO1Vrnt0nJfJHv6VguwTJ0nBATxi6S4d0EGmwtPvGE1_iHNY_1Pd_pFinTW2rIgkTXILhEc00wzwTwAz0QQFWys2KcJ4-Bvk7dvMOcOSZ9ZtH8-yQOtygCFByX4jq6RSPdTpvLOuLVHGCirpDsSmhK4v0rjr0aj9ryniOVBVGriXkEYyZ91bQogkIQXkxjkZU7PSKqOdNNK3UYXr14-EKE8vEq-kUzXa7am6mc9guP5T-BBpQNtFeDTZidNuqIGNkccyttsKXpyhYutrfd8dHbTkQg6GEUtkKLyUHbdJA4mjCWfDygoL2BhoxR3kNsaVb0H-WWHEDlU34kgBFis-OlpuAi_JEXKfaQ2Pwq1aXcOgKVS72mQiVQ1YMIyjwwBpSmEV0xHGxmgwuuQ-aHKGE5wGOEsyXdvkYw_hhScJ1-EoI-A0csR1y63XU2jrPI9HohdMOJ61clGAE7OBz3vGa5ayqAJ_QaUuCLbXVA6JOy6CJmyhD47rLe6-JMypcmmOu5EmilmVwwRGEPmL44RoEQj8OvGejtpVX-sbq8y_KweyfO7e9FmS_mJwbfauMuCGLAOD228QOHhNEiwCef7PWDxIuiwn7TU-mnKpifdQ9TdNWrJDSTqRlIA72cJE9BgBqVdR5rjxpg-wjOnkbnnrWVDEWGZadKQNmwDX_thC2S6S6hvy7AQlSOx_scCie35tBC5kJd1uFJPRd1JJ3IPoOMfY7qCBNmL9lKjhSEIlGRqUB55tg9P2K55Y4FMHQa-wf9LNOkNY0tjjlb9ReJTlr6t4seMo35p0SPvqF1z6BcpQ2kSu-xI83yA_cxQ5aNkfMupTf_X0r9Ux_z-o-1ezulR2aXzDgEkVZoqLNAsNPdeC90XZAMpZdhUODADDBT_OEoqPOBbyRuzvd-zN6fsKQxB0Sinkq-e-RvwzD57redO6g8uyb4U-jcotvb7kCx5id1MgAhp6raiuft94XUhkLXR-1MzCFn4ZgGXvHB8UnVSSpFZLo7BexMaIgwE2bXVA8Pw1srlVgz6lzZiJj6OiyqUY4cxkiGE035ft5sSxZKUwEMHydNW4SM9UVWxyQ53e_P0mGXi2eLioSSkJrK7eQsDjEwH9O5-LZsk6EbLQZZLB9xR7fSKnfok1uYoy1KaF9lI2W9ophnMUC4XgqiqPTo-kXMbMMNXt7OtucGOOLko266nIBR_uoTz7RKSxAybocv-Ja8epQApqe7KWWAMEx-0ma6QadJVTHx4n-5wGymNaUhAzo122DHpD-jWIkkryFFSU9uUh9xFCuB4lGmCDJ-emlWdzMQENsNrY7coawlJGGIDe1uMQ1t06q5ZIHi66KM8a-8t-pfC39TB9UZutVFMBSAYP7GqMSN1Rl2yocoq4HAfbgJNttgck5fJQQh8xpke5UixONqiRf_chKkwK-EIbApjY9UvI25go3DnqLAguJ5Qfw0jinxPeor4GMAuhjmD5IYp2ep_ZEdRdKQKS-gyDviV9h1PLlE2bFLXd6hudP1UFmxGv4lLAH_cQsgADMfEdK_yoWfGCBOQ7IGm16GYDjk3L5_ecjKqVqFFrnn1TNy1c5uY7gWQ86L40DF-q5osRwoFz3mSNn_pMWQJb_6nWzs8AVnYMtQLKeESfMzFDpoyvwgp4NGqTTHELSp2ZWrhnR4Zo0eqG_XByqdslJlu1IfAE8T-s-vTgydsjNGFlXMRuaZzC9Br-KpmCT-gXtdg=w400-h380-p-k-rw-nu-v1",
+      name: name==null?"Web5 Social":name,
+      logo: logo==null?"https://lh3.googleusercontent.com/fife/AK0iWDzoYTHWdtLQSNfP9DYeb2gS0gIhIv5NWJGErMZL6z5aEt3ycyUq6itUGwortM_7cbWhFHascxn7IoiQ_-y9PVBESJoO9V4oxCQtx2BCwqWIrXxoy26wVROxLeMtxhj249AK3chtlcUOMX2ajkiSKGfyglO1Vrnt0nJfJHv6VguwTJ0nBATxi6S4d0EGmwtPvGE1_iHNY_1Pd_pFinTW2rIgkTXILhEc00wzwTwAz0QQFWys2KcJ4-Bvk7dvMOcOSZ9ZtH8-yQOtygCFByX4jq6RSPdTpvLOuLVHGCirpDsSmhK4v0rjr0aj9ryniOVBVGriXkEYyZ91bQogkIQXkxjkZU7PSKqOdNNK3UYXr14-EKE8vEq-kUzXa7am6mc9guP5T-BBpQNtFeDTZidNuqIGNkccyttsKXpyhYutrfd8dHbTkQg6GEUtkKLyUHbdJA4mjCWfDygoL2BhoxR3kNsaVb0H-WWHEDlU34kgBFis-OlpuAi_JEXKfaQ2Pwq1aXcOgKVS72mQiVQ1YMIyjwwBpSmEV0xHGxmgwuuQ-aHKGE5wGOEsyXdvkYw_hhScJ1-EoI-A0csR1y63XU2jrPI9HohdMOJ61clGAE7OBz3vGa5ayqAJ_QaUuCLbXVA6JOy6CJmyhD47rLe6-JMypcmmOu5EmilmVwwRGEPmL44RoEQj8OvGejtpVX-sbq8y_KweyfO7e9FmS_mJwbfauMuCGLAOD228QOHhNEiwCef7PWDxIuiwn7TU-mnKpifdQ9TdNWrJDSTqRlIA72cJE9BgBqVdR5rjxpg-wjOnkbnnrWVDEWGZadKQNmwDX_thC2S6S6hvy7AQlSOx_scCie35tBC5kJd1uFJPRd1JJ3IPoOMfY7qCBNmL9lKjhSEIlGRqUB55tg9P2K55Y4FMHQa-wf9LNOkNY0tjjlb9ReJTlr6t4seMo35p0SPvqF1z6BcpQ2kSu-xI83yA_cxQ5aNkfMupTf_X0r9Ux_z-o-1ezulR2aXzDgEkVZoqLNAsNPdeC90XZAMpZdhUODADDBT_OEoqPOBbyRuzvd-zN6fsKQxB0Sinkq-e-RvwzD57redO6g8uyb4U-jcotvb7kCx5id1MgAhp6raiuft94XUhkLXR-1MzCFn4ZgGXvHB8UnVSSpFZLo7BexMaIgwE2bXVA8Pw1srlVgz6lzZiJj6OiyqUY4cxkiGE035ft5sSxZKUwEMHydNW4SM9UVWxyQ53e_P0mGXi2eLioSSkJrK7eQsDjEwH9O5-LZsk6EbLQZZLB9xR7fSKnfok1uYoy1KaF9lI2W9ophnMUC4XgqiqPTo-kXMbMMNXt7OtucGOOLko266nIBR_uoTz7RKSxAybocv-Ja8epQApqe7KWWAMEx-0ma6QadJVTHx4n-5wGymNaUhAzo122DHpD-jWIkkryFFSU9uUh9xFCuB4lGmCDJ-emlWdzMQENsNrY7coawlJGGIDe1uMQ1t06q5ZIHi66KM8a-8t-pfC39TB9UZutVFMBSAYP7GqMSN1Rl2yocoq4HAfbgJNttgck5fJQQh8xpke5UixONqiRf_chKkwK-EIbApjY9UvI25go3DnqLAguJ5Qfw0jinxPeor4GMAuhjmD5IYp2ep_ZEdRdKQKS-gyDviV9h1PLlE2bFLXd6hudP1UFmxGv4lLAH_cQsgADMfEdK_yoWfGCBOQ7IGm16GYDjk3L5_ecjKqVqFFrnn1TNy1c5uY7gWQ86L40DF-q5osRwoFz3mSNn_pMWQJb_6nWzs8AVnYMtQLKeESfMzFDpoyvwgp4NGqTTHELSp2ZWrhnR4Zo0eqG_XByqdslJlu1IfAE8T-s-vTgydsjNGFlXMRuaZzC9Br-KpmCT-gXtdg=w400-h380-p-k-rw-nu-v1":logo,
     };
   }
 
   async whitelistUrl(origin: string): Promise<string> {
-    const whiteListUrlResponse = await whitelistUrl(clientId, clientSecret, origin);;
+    const whiteListUrlResponse = await whitelistUrl(this.clientId, this.clientSecret, origin);;
     return whiteListUrlResponse;
   }
 
-  async init(blockchain?: string, symbol?: string, socialLoginDTO?: Partial<SocialLoginDTO>): Promise<void> {
+  async init(socialLoginDTO?: Partial<SocialLoginDTO>): Promise<void> {
     const finalDTO: SocialLoginDTO = {
       chainId: "0x1",
       whitelistUrls: {},
@@ -82,40 +82,27 @@ class SocialLogin {
       if (socialLoginDTO.whteLableData) this.whiteLabel = socialLoginDTO.whteLableData;
     }
 
-    if (!(blockchain || symbol)) {
-      throw new Error("At least one of blockchain or symbol must be provided.");
-    }
-
-    let chainConfig: ChainConfig | undefined;
-    if (blockchain) {
-      chainConfig = chains.find((chain) => chain.blockchain === blockchain);
-    } else if (symbol) {
-      chainConfig = chains.find((chain) => chain.symbol === symbol);
-    }
-
-    if (!chainConfig) {
-      throw new Error(
-        `Chain configuration not found for blockchain: ${blockchain || ""} and symbol: ${symbol || ""}`
-      );
-    }
+    
 
     try {
       const web3AuthCore = new Web3AuthNoModal({
         clientId: this.clientId,
         chainConfig: {
           chainNamespace: CHAIN_NAMESPACES.EIP155,
-          chainId: chainConfig.chainId,
+          chainId: "0X1",
+          rpcTarget: "https://rpc.ankr.com/eth"
         },
       });
 
       const chainConfigEvm = {
         chainNamespace: CHAIN_NAMESPACES.EIP155,
-        chainId: chainConfig.chainId,
-        rpcTarget: chainConfig.rpcTarget,
-        displayName: chainConfig.displayName,
-        blockExplorer: chainConfig.blockExplorer,
-        ticker: chainConfig.ticker,
-        tickerName: chainConfig.tickerName,
+        chainId: "0X1",
+        rpcTarget: "https://rpc.ankr.com/eth",
+        network:"mainnet",
+        displayName:"Ethereum Mainnet",
+        blockExplorer:"https://etherscan.io/",
+        ticker:"ETH",
+        tickerName:"Ethereum"
       };
 
       const privateKeyProvider = new EthereumPrivateKeyProvider({
@@ -257,8 +244,8 @@ class SocialLogin {
       const web3Provider = new ethers.providers.Web3Provider(web3authProvider);
       const signer = web3Provider.getSigner();
       const gotAccount = await signer.getAddress();
-      const network = await web3Provider.getNetwork();
-      console.info(`EOA Address ${gotAccount}\nNetwork: ${network}`);
+      // const network = await web3Provider.getNetwork();
+      console.info(`EOA Address ${gotAccount}`);
       this.provider = web3authProvider;
       return web3authProvider;
     } catch (error) {
@@ -284,8 +271,8 @@ class SocialLogin {
       const web3Provider = new ethers.providers.Web3Provider(web3authProvider);
       const signer = web3Provider.getSigner();
       const gotAccount = await signer.getAddress();
-      const network = await web3Provider.getNetwork();
-      console.info(`EOA Address ${gotAccount}\nNetwork: ${network}`);
+      // const network = await web3Provider.getNetwork();
+      console.info(`EOA Address ${gotAccount}`);
       this.provider = web3authProvider;
       return web3authProvider;
     } catch (error) {
@@ -311,8 +298,8 @@ class SocialLogin {
       const web3Provider = new ethers.providers.Web3Provider(web3authProvider);
       const signer = web3Provider.getSigner();
       const gotAccount = await signer.getAddress();
-      const network = await web3Provider.getNetwork();
-      console.info(`EOA Address ${gotAccount}\nNetwork: ${network}`);
+      // const network = await web3Provider.getNetwork();
+      console.info(`EOA Address ${gotAccount}`);
       this.provider = web3authProvider;
       return web3authProvider;
     } catch (error) {
@@ -335,8 +322,8 @@ class SocialLogin {
       const web3Provider = new ethers.providers.Web3Provider(web3authProvider);
       const signer = web3Provider.getSigner();
       const gotAccount = await signer.getAddress();
-      const network = await web3Provider.getNetwork();
-      console.info(`EOA Address ${gotAccount}\nNetwork: ${network}`);
+      // const network = await web3Provider.getNetwork();
+      console.info(`EOA Address ${gotAccount}`);
       this.provider = web3authProvider;
       return web3authProvider;
     } catch (error) {
@@ -359,8 +346,8 @@ class SocialLogin {
       const web3Provider = new ethers.providers.Web3Provider(web3authProvider);
       const signer = web3Provider.getSigner();
       const gotAccount = await signer.getAddress();
-      const network = await web3Provider.getNetwork();
-      console.info(`EOA Address ${gotAccount}\nNetwork: ${network}`);
+      // const network = await web3Provider.getNetwork();
+      console.info(`EOA Address ${gotAccount}`);
       this.provider = web3authProvider;
       return web3authProvider;
     } catch (error) {
@@ -380,19 +367,19 @@ class SocialLogin {
   }
 }
 
-const socialLoginSDK: SocialLogin = new SocialLogin();
-(window as any).socialLoginSDK = socialLoginSDK;
+// const socialLoginSDK: SocialLogin = new SocialLogin(this.clientId,this.clientSecret);
+// (window as any).socialLoginSDK = socialLoginSDK;
 
 export default SocialLogin;
 
-let initializedSocialLogin: SocialLogin | null = null;
-const getSocialLoginSDK = async (socialLoginDTO?: Partial<SocialLoginDTO>): Promise<SocialLogin> => {
-  if (initializedSocialLogin) {
-    return initializedSocialLogin;
-  }
-  await socialLoginSDK.init("ethereum", "eth", socialLoginDTO);
-  initializedSocialLogin = socialLoginSDK;
-  return socialLoginSDK;
-};
+// let initializedSocialLogin: SocialLogin | null = null;
+// const getSocialLoginSDK = async (socialLoginDTO?: Partial<SocialLoginDTO>): Promise<SocialLogin> => {
+//   if (initializedSocialLogin) {
+//     return initializedSocialLogin;
+//   }
+//   await socialLoginSDK.init("ethereum", "eth", socialLoginDTO);
+//   initializedSocialLogin = socialLoginSDK;
+//   return socialLoginSDK;
+// };
 
-export { socialLoginSDK, getSocialLoginSDK };
+// export { socialLoginSDK, getSocialLoginSDK };

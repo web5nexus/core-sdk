@@ -1,5 +1,4 @@
-import SocialLogin, { socialLoginSDK, getSocialLoginSDK } from "./SocialLogin";
+import SocialLogin from "./SocialLogin";
 export * from './config/index';
 
-export default SocialLogin;
-export { socialLoginSDK, getSocialLoginSDK };
+export default  SocialLogin;

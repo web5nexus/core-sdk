@@ -1,5 +1,5 @@
-import XdcRpc from './xdc';
 import CosmosRpc from './cosmos'
+import EvmRpc from './evm';
 export type {
     CHAIN_NAMESPACES,
     SafeEventEmitterProvider,
@@ -9,4 +9,4 @@ export type {
 import evmchains from './evmchains'
 import cosmoschains from './cosmoschains';
 
-export default {evmchains, cosmoschains, XdcRpc,CosmosRpc};
+export default {EvmRpc,CosmosRpc, evmchains, cosmoschains}

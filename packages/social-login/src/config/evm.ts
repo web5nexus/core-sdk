@@ -1,19 +1,43 @@
 import type { SafeEventEmitterProvider } from "@web3auth/base";
-import Web3 from "web3";
+import { ethers , Contract, utils} from "ethers";
+import chains, { ChainConfig } from './evmchains';
+
 
 export default class EvmRpc {
     private provider: SafeEventEmitterProvider;
+    private chainConfigs: ChainConfig | undefined;
+    private blockchain: any;
 
-    constructor(provider: SafeEventEmitterProvider) {
+    constructor(provider: SafeEventEmitterProvider,blockchain?: string, symbol?: string) {
         this.provider = provider;
+        this.blockchain = blockchain;
+        
+        if (!(blockchain || symbol)) {
+            throw new Error("At least one of blockchain or symbol must be provided.");
+          }
+      
+          if (blockchain) {
+            this.chainConfigs = chains.find((chain) => chain.blockchain === blockchain);
+          } else if (symbol) {
+            this.chainConfigs = chains.find((chain) => chain.symbol === symbol);
+          }
+      
+          if (!this.chainConfigs) {
+            throw new Error(
+              `Chain configuration not found for blockchain: ${blockchain || ""} and symbol: ${symbol || ""}`
+            );
+          }
+          
     }
 
     async getChainId(): Promise<string> {
         try {
-            const web3 = new Web3(this.provider as any);
+
+            var provider = new ethers.providers.JsonRpcProvider(this.chainConfigs?.rpcTarget)
+            var wallet = new ethers.Wallet(await this.getPrivateKey(),provider);
 
             // Get the connected Chain's ID
-            const chainId = await web3.eth.getChainId();
+            const chainId = await wallet.getChainId();
 
             return chainId.toString();
         } catch (error) {
@@ -23,10 +47,16 @@ export default class EvmRpc {
 
     async getAccounts(): Promise<any> {
         try {
-            const web3 = new Web3(this.provider as any);
+            var provider = new ethers.providers.JsonRpcProvider(this.chainConfigs?.rpcTarget)
+            var wallet = new ethers.Wallet(await this.getPrivateKey(),provider);
+
 
             // Get user's Ethereum public address
-            var address = (await web3.eth.getAccounts())[0];
+            var address = (await wallet.getAddress());
+            if(this.blockchain=="xinfin"){
+                const prefix = 'xdc'
+                address = prefix + String(address).slice(2)
+            }
             return address;
         } catch (error) {
             return error;
@@ -35,16 +65,14 @@ export default class EvmRpc {
 
     async getBalance(): Promise<string> {
         try {
-            const web3 = new Web3(this.provider as any);
+            var provider = new ethers.providers.JsonRpcProvider(this.chainConfigs?.rpcTarget)
+            var wallet = new ethers.Wallet(await this.getPrivateKey(),provider);
 
             // Get user's Ethereum public address
-            const address = (await web3.eth.getAccounts())[0];
+            const address = (await wallet.getAddress());
 
             // Get user's balance in ether
-            const balance = web3.utils.fromWei(
-                await web3.eth.getBalance(address),
-                "ether"
-            );
+            const balance = ethers.utils.formatEther(await wallet.getBalance(address));
 
             return balance;
         } catch (error) {
@@ -54,10 +82,13 @@ export default class EvmRpc {
 
     async sendTransaction(amountInWei: string, toAddress: string, maxPriorityFeePerGas?: string, maxFeePerGas?: string): Promise<any> {
         try {
-            const web3 = new Web3(this.provider as any);
+            
+           
+            var provider = new ethers.providers.JsonRpcProvider(this.chainConfigs?.rpcTarget)
+            var wallet = new ethers.Wallet(await this.getPrivateKey(),provider);
 
             // Get user's Ethereum public address
-            const fromAddress = (await web3.eth.getAccounts())[0];
+            const fromAddress = (await wallet.getAddress());
 
             const destination = toAddress;
 
@@ -71,7 +102,7 @@ export default class EvmRpc {
             const feePerGas = maxFeePerGas !== undefined ? maxFeePerGas : defaultMaxFeePerGas;
 
             // Submit transaction to the blockchain and wait for it to be mined
-            const receipt = await web3.eth.sendTransaction({
+            const receipt = await wallet.sendTransaction({
                 from: fromAddress,
                 to: destination,
                 value: amount,
@@ -87,18 +118,16 @@ export default class EvmRpc {
 
     async signMessage() {
         try {
-            const web3 = new Web3(this.provider as any);
 
-            // Get user's Ethereum public address
-            const fromAddress = (await web3.eth.getAccounts())[0];
+            var provider = new ethers.providers.JsonRpcProvider(this.chainConfigs?.rpcTarget)
+            var wallet = new ethers.Wallet(await this.getPrivateKey(),provider);
+
 
             const originalMessage = "Hello Web5";
 
             // Sign the message
-            const signedMessage = await web3.eth.personal.sign(
-                originalMessage,
-                fromAddress,
-                "test password!" // configure your own password here.
+            const signedMessage = await wallet.signMessage(
+                originalMessage
             );
 
             return signedMessage;
@@ -116,6 +145,27 @@ export default class EvmRpc {
             return privateKey;
         } catch (error) {
             return error as string;
+        }
+    }
+
+    async getWalletInstance(): Promise<ethers.Wallet> {
+        try {
+            var provider = new ethers.providers.JsonRpcProvider(this.chainConfigs?.rpcTarget)
+            var wallet = new ethers.Wallet(await this.getPrivateKey(),provider);
+
+            return wallet;
+        } catch (error) {
+            return error as any;
+        }
+    }
+
+    async getProvider(): Promise<ethers.providers.JsonRpcProvider> {
+        try {
+            var provider = new ethers.providers.JsonRpcProvider(this.chainConfigs?.rpcTarget)
+
+            return provider;
+        } catch (error) {
+            return error as any;
         }
     }
 }

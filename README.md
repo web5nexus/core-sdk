@@ -24,40 +24,6 @@ The Web5 Nexus SDK is a comprehensive and versatile web3 integration platform de
 
 - **Private Blockchain Support**: Web5 Nexus supports private blockchain networks, such as Quorum Blockchain (Hyperledger Besu + Go Quorum), allowing developers to build and deploy applications on private and permissioned blockchain networks.
 
-## Getting Started
-
-To get started with the Web5 Nexus SDK, follow the steps below:
-
-1. Install the SDK package via npm or yarn:
-   ```
-   npm install @web5nexus/web3auth-core
-
-   ```
-   
-2. Import the SDK into your project:
-   ```typescript
-   import Web5Nexus from '@web5nexus/web3auth-core';
-   ```
-   
-3. Initialize the Web5 Nexus SDK with your credentials:
-   ```typescript
-   const clientId = 'Your Web3Auth Client ID'; // Get From web3auth.io dashboard
-   const web5 = new Web5Nexus.Web5(clientId, 'MAINNET');
-   ```
-
-4. Use the various SDK methods to integrate blockchain functionalities into your application. For example:
-   ```typescript
-   // Authenticate with Google
-   await web5.google();
-
-   <!-- There are More Authentication to be referred from the example and Documentation -->
-   
-   // Integrate NFT Marketplace functionalities (Coming Soon)
-   const nftMarketplace = web5.nftMarketplace();
-   const nftListings = await nftMarketplace.getNFTListings();
-   // ...
-   ```
-
 For detailed API documentation and usage examples, please refer to the [Web5 Nexus SDK Documentation](https://docs.web5.nexus).
 
 ## Contributions and Support
