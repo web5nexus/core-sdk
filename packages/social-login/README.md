@@ -15,8 +15,18 @@ const clientSecret = "Client Secret Recieved from Web3Auth Dashboard";
 const name = "XDC Auth"
 const logo = "https://xinfin.org/assets/images/brand-assets/xdc-icon.png"
 
+const whiteLabel = {
+    name :name,
+    logo :logo
+}
+const params: Web3AuthParamsType={
+    type: "web3auth",
+    clientId:clientId,
+    clientSecret:clientSecret
+}
+
 // init wallet
-const socialLoginSDK = new SocialLogin(clientId,clientSecret,name,logo);
+const socialLoginSDK = new SocialLogin(params,whiteLabel);
 await socialLoginSDK.init();
 // show connect modal
 socialLoginSDK.showWallet();
