@@ -6,7 +6,4 @@ export type {
     WALLET_ADAPTERS,
 } from "@web3auth/base";
 
-import evmchains from './evmchains'
-import cosmoschains from './cosmoschains';
-
-export default {EvmRpc,CosmosRpc, evmchains, cosmoschains}
+export {EvmRpc,CosmosRpc}

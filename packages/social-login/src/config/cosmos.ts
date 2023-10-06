@@ -1,5 +1,5 @@
 import type { SafeEventEmitterProvider } from "@web3auth/base";
-import cosmoschains from './cosmoschains';
+import {BlockchainType,cosmoschains} from '@web5nexus/coretypes';
 import { StargateClient, SigningStargateClient, GasPrice } from "@cosmjs/stargate";
 import {
     DirectSecp256k1Wallet,
@@ -13,12 +13,12 @@ export default class CosmosRpc {
     public rpcTarget: string;
     public denom: string;
 
-    constructor(blockchain: string, network: string, provider: SafeEventEmitterProvider) {
-        this.blockchain = blockchain;
-        this.hrp = this.getHrpValue(blockchain, network);
+    constructor(params:BlockchainType, provider: SafeEventEmitterProvider) {
+        this.blockchain = params.blockchain;
+        this.hrp = this.getHrpValue(params.blockchain, params.network);
         this.provider = provider;
-        this.rpcTarget = this.getRpcValue(blockchain, network);
-        this.denom = this.getDenomValue(blockchain, network);
+        this.rpcTarget = this.getRpcValue(params.blockchain, params.network);
+        this.denom = this.getDenomValue(params.blockchain, params.network);
     }
 
     private getHrpValue(blockchain: string, network: string): string {

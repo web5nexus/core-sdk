@@ -1,6 +1,6 @@
 import type { SafeEventEmitterProvider } from "@web3auth/base";
-import { ethers , Contract, utils} from "ethers";
-import chains, { ChainConfig } from './evmchains';
+import { ethers} from "ethers";
+import {BlockchainType, ChainConfig, evmchains } from '@web5nexus/coretypes';
 
 
 export default class EvmRpc {
@@ -8,23 +8,19 @@ export default class EvmRpc {
     private chainConfigs: ChainConfig | undefined;
     private blockchain: any;
 
-    constructor(provider: SafeEventEmitterProvider,blockchain?: string, symbol?: string) {
+    constructor(provider: SafeEventEmitterProvider,params: BlockchainType) {
         this.provider = provider;
-        this.blockchain = blockchain;
+        this.blockchain = params.blockchain;
         
-        if (!(blockchain || symbol)) {
-            throw new Error("At least one of blockchain or symbol must be provided.");
+        if (!(params.blockchain && params.network)) {
+            throw new Error("Both Blockchain and network must be provided.");
           }
       
-          if (blockchain) {
-            this.chainConfigs = chains.find((chain) => chain.blockchain === blockchain);
-          } else if (symbol) {
-            this.chainConfigs = chains.find((chain) => chain.symbol === symbol);
-          }
+          this.chainConfigs = evmchains.find((chain) => chain.blockchain === params.blockchain && chain.network === params.network);
       
           if (!this.chainConfigs) {
             throw new Error(
-              `Chain configuration not found for blockchain: ${blockchain || ""} and symbol: ${symbol || ""}`
+              `Chain configuration not found for blockchain: ${params.blockchain || ""} and network: ${params.network || ""}`
             );
           }
           
