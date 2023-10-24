@@ -71,9 +71,9 @@ class SocialLogin {
 
   async init(network?:NetworkOption, socialLoginDTO?: Partial<SocialLoginDTO>): Promise<void> {
     const finalDTO: SocialLoginDTO = {
-      chainId: "0x1",
+      chainId: "0x38",
       whitelistUrls: {},
-      network: "sapphire_mainnet",
+      network: (network!=null)?network:"sapphire_mainnet",
       whteLableData: this.whiteLabel,
     };
     if (socialLoginDTO) {
@@ -91,20 +91,20 @@ class SocialLogin {
         clientId: this.Web3AuthParams.clientId,
         chainConfig: {
           chainNamespace: CHAIN_NAMESPACES.EIP155,
-          chainId: "0X1",
-          rpcTarget: "https://rpc.ankr.com/eth"
+          chainId: "0x38",
+          rpcTarget: "https://bsc-dataseed1.binance.org/"
         },
       });
 
       const chainConfigEvm = {
         chainNamespace: CHAIN_NAMESPACES.EIP155,
-        chainId: "0X1",
-        rpcTarget: "https://rpc.ankr.com/eth",
         network:"mainnet",
-        displayName:"Ethereum Mainnet",
-        blockExplorer:"https://etherscan.io/",
-        ticker:"ETH",
-        tickerName:"Ethereum"
+        chainId: "0x38", // hex of 56
+        rpcTarget: "https://bsc-dataseed1.binance.org/",
+        displayName: "Binance SmartChain Mainnet",
+        blockExplorer: "https://bscscan.com/",
+        ticker: "BNB",
+        tickerName: "BNB",
       };
 
       const privateKeyProvider = new EthereumPrivateKeyProvider({
@@ -112,7 +112,7 @@ class SocialLogin {
       });
 
 
-
+      console.log("Network Selected: ",finalDTO.network)
       const openloginAdapter = new OpenloginAdapter({
         adapterSettings: {
           clientId: this.Web3AuthParams.clientId,
