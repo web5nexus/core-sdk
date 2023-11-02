@@ -17,10 +17,10 @@ import { NetworkOption,Web3AuthParamsType, SocialLoginDTO, WhiteLabelDataType } 
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import { Web3AuthNoModal } from "@web3auth/no-modal";
 
-function createLoginModal(socialLogin: SocialLogin): void {
+function createLoginModal(socialLogin: SocialLogin, supportedLogins: string[]): void {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   const root = createRoot((document as any).getElementById("w3a-modal"));
-  root.render(<UI socialLogin={socialLogin} />);
+  root.render(<UI socialLogin={socialLogin} supportedLogins={supportedLogins} />);
 }
 
 class SocialLogin {
@@ -36,6 +36,8 @@ class SocialLogin {
   iframeInitialized = false;
 
   isInit = false;
+
+  supportedLogins: string[];
 
   Web3AuthParams: Web3AuthParamsType;
 
@@ -57,7 +59,7 @@ class SocialLogin {
       clientId: params.clientId,
       clientSecret: params.clientSecret
     }
-
+    this.supportedLogins=[];
     this.whiteLabel = {
       name: whiteLabel?.name==null?"Web5 Auth":whiteLabel.name,
       logo: whiteLabel?.logo==null?"https://lh3.googleusercontent.com/fife/AK0iWDzoYTHWdtLQSNfP9DYeb2gS0gIhIv5NWJGErMZL6z5aEt3ycyUq6itUGwortM_7cbWhFHascxn7IoiQ_-y9PVBESJoO9V4oxCQtx2BCwqWIrXxoy26wVROxLeMtxhj249AK3chtlcUOMX2ajkiSKGfyglO1Vrnt0nJfJHv6VguwTJ0nBATxi6S4d0EGmwtPvGE1_iHNY_1Pd_pFinTW2rIgkTXILhEc00wzwTwAz0QQFWys2KcJ4-Bvk7dvMOcOSZ9ZtH8-yQOtygCFByX4jq6RSPdTpvLOuLVHGCirpDsSmhK4v0rjr0aj9ryniOVBVGriXkEYyZ91bQogkIQXkxjkZU7PSKqOdNNK3UYXr14-EKE8vEq-kUzXa7am6mc9guP5T-BBpQNtFeDTZidNuqIGNkccyttsKXpyhYutrfd8dHbTkQg6GEUtkKLyUHbdJA4mjCWfDygoL2BhoxR3kNsaVb0H-WWHEDlU34kgBFis-OlpuAi_JEXKfaQ2Pwq1aXcOgKVS72mQiVQ1YMIyjwwBpSmEV0xHGxmgwuuQ-aHKGE5wGOEsyXdvkYw_hhScJ1-EoI-A0csR1y63XU2jrPI9HohdMOJ61clGAE7OBz3vGa5ayqAJ_QaUuCLbXVA6JOy6CJmyhD47rLe6-JMypcmmOu5EmilmVwwRGEPmL44RoEQj8OvGejtpVX-sbq8y_KweyfO7e9FmS_mJwbfauMuCGLAOD228QOHhNEiwCef7PWDxIuiwn7TU-mnKpifdQ9TdNWrJDSTqRlIA72cJE9BgBqVdR5rjxpg-wjOnkbnnrWVDEWGZadKQNmwDX_thC2S6S6hvy7AQlSOx_scCie35tBC5kJd1uFJPRd1JJ3IPoOMfY7qCBNmL9lKjhSEIlGRqUB55tg9P2K55Y4FMHQa-wf9LNOkNY0tjjlb9ReJTlr6t4seMo35p0SPvqF1z6BcpQ2kSu-xI83yA_cxQ5aNkfMupTf_X0r9Ux_z-o-1ezulR2aXzDgEkVZoqLNAsNPdeC90XZAMpZdhUODADDBT_OEoqPOBbyRuzvd-zN6fsKQxB0Sinkq-e-RvwzD57redO6g8uyb4U-jcotvb7kCx5id1MgAhp6raiuft94XUhkLXR-1MzCFn4ZgGXvHB8UnVSSpFZLo7BexMaIgwE2bXVA8Pw1srlVgz6lzZiJj6OiyqUY4cxkiGE035ft5sSxZKUwEMHydNW4SM9UVWxyQ53e_P0mGXi2eLioSSkJrK7eQsDjEwH9O5-LZsk6EbLQZZLB9xR7fSKnfok1uYoy1KaF9lI2W9ophnMUC4XgqiqPTo-kXMbMMNXt7OtucGOOLko266nIBR_uoTz7RKSxAybocv-Ja8epQApqe7KWWAMEx-0ma6QadJVTHx4n-5wGymNaUhAzo122DHpD-jWIkkryFFSU9uUh9xFCuB4lGmCDJ-emlWdzMQENsNrY7coawlJGGIDe1uMQ1t06q5ZIHi66KM8a-8t-pfC39TB9UZutVFMBSAYP7GqMSN1Rl2yocoq4HAfbgJNttgck5fJQQh8xpke5UixONqiRf_chKkwK-EIbApjY9UvI25go3DnqLAguJ5Qfw0jinxPeor4GMAuhjmD5IYp2ep_ZEdRdKQKS-gyDviV9h1PLlE2bFLXd6hudP1UFmxGv4lLAH_cQsgADMfEdK_yoWfGCBOQ7IGm16GYDjk3L5_ecjKqVqFFrnn1TNy1c5uY7gWQ86L40DF-q5osRwoFz3mSNn_pMWQJb_6nWzs8AVnYMtQLKeESfMzFDpoyvwgp4NGqTTHELSp2ZWrhnR4Zo0eqG_XByqdslJlu1IfAE8T-s-vTgydsjNGFlXMRuaZzC9Br-KpmCT-gXtdg=w400-h380-p-k-rw-nu-v1":whiteLabel.logo
@@ -69,16 +71,15 @@ class SocialLogin {
     return whiteListUrlResponse;
   }
 
-  async init(network?:NetworkOption, socialLoginDTO?: Partial<SocialLoginDTO>): Promise<void> {
+  async init(network?:NetworkOption,supportedLogins?:string[]|any, socialLoginDTO?: Partial<SocialLoginDTO>): Promise<void> {
     const finalDTO: SocialLoginDTO = {
       chainId: "0x38",
       whitelistUrls: {},
       network: (network!=null)?network:"sapphire_mainnet",
       whteLableData: this.whiteLabel,
     };
+    this.supportedLogins = supportedLogins?supportedLogins:['email-passwordless'];
     if (socialLoginDTO) {
-      if (socialLoginDTO.chainId) finalDTO.chainId = socialLoginDTO.chainId;
-      if (socialLoginDTO.network) finalDTO.network = socialLoginDTO.network;
       if (socialLoginDTO.whitelistUrls) finalDTO.whitelistUrls = socialLoginDTO.whitelistUrls;
       if (socialLoginDTO.whteLableData) this.whiteLabel = socialLoginDTO.whteLableData;
       if (network) finalDTO.network = network;
@@ -148,7 +149,7 @@ class SocialLogin {
       if (web3AuthCore && web3AuthCore.provider) {
         this.provider = web3AuthCore.provider;
       }
-      createLoginModal(this);
+      createLoginModal(this,this.supportedLogins);
       this.isInit = true;
     } catch (error) {
       console.error(error);
