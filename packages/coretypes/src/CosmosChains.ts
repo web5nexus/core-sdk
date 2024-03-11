@@ -25,6 +25,19 @@ export const cosmoschains: CosmosChainConfig[] = [
         network: "mainnet",
         rpcTarget: "https://rpc.sentry-02.theta-testnet.polypore.xyz",
         denom: "uatom"
+    },{
+        blockchain: "secret",
+        hrp: "secret",
+        network: "mainnet",
+        rpcTarget: "https://scrt.public-rpc.com",
+        denom: "uscrt"
+    },
+    {
+        blockchain: "secret",
+        hrp: "secret",
+        network: "testnet",
+        rpcTarget: "https://rpc.pulsar.scrttestnet.com",
+        denom: "uscrt"
     },
 ];
 

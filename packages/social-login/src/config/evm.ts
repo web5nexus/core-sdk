@@ -193,7 +193,8 @@ export default class EvmRpc {
             const web3Provider = new Web3(this.rpcUrl != null ? this.rpcUrl : this.chainConfigs?.rpcTarget);
 
             const account = web3Provider.eth.accounts.privateKeyToAccount('0x'+privateKey);
-
+            // Wait for the asynchronous operation to complete
+            web3Provider.eth.accounts.wallet.add(account);
             // Set the account as the default account for the web3Provider
             web3Provider.eth.defaultAccount = account.address;
 

@@ -1,6 +1,6 @@
 {
   "name": "@web5nexus/coretypes",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Web5 Necus Client SDK types",
   "main": "./dist/src/index.js",
   "typings": "./dist/src/index.d.ts",

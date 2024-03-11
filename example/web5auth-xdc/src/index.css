@@ -1,13 +1,19 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: rubik, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+code, pre {
+  font-size: 14px;
+  font-family: Inconsolata, Monaco, Consolas, "Courier New", Courier, monospace;
+}
+
+p {
+  margin: 10px 0;
+}
+
+.Toastify__toast-body {
+  word-break: break-all;
 }
