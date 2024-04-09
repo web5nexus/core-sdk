@@ -134,7 +134,7 @@ export const Web3AuthProvider = ({ children }: any) => {
         clientSecret:clientSecret
       }
       const sdk = new SocialLogin(params, whiteLabel);
-      const supportedLogin = ['email-passwordless','google','github']
+      const supportedLogin = ['email-passwordless','google','github','facebook','twitter','discord','linkedin','twitch']
       await sdk.init(network,supportedLogin);
       sdk.showWallet();
       setSocialLoginSDK(sdk);
