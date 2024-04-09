@@ -36,6 +36,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@arcana/auth-core": "2.0.0-alpha.3",
     "@cosmjs/proto-signing": "^0.31.1",
     "@cosmjs/stargate": "^0.31.1",
     "@walletconnect/modal": "^2.6.2",
